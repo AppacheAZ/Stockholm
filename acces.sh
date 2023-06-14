@@ -1,0 +1,1 @@
+docker exec -it stockholm_github-stockholm-1 /bin/bash
