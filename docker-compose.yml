@@ -1,7 +1,7 @@
 services:
   stockholm:
     build: .
-    image: "stockholm_uwu"
+    image: "stockholm__uwu"
     ports:
       - "8080:8080"
     volumes:
