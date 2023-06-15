@@ -5,7 +5,7 @@ Encryption and decryption of files using a 128-bit key in CBC mode.
 ## Project description
 
 This project is a program for encrypting and decrypting files within a specific folder recursively. 
-It utilizes Fernet, a secure and reliable encryption implementation for Python using AES-128 (dvanced Encryption Standard) in CBC (Cipher Block Chaining) mode.
+It utilizes Fernet, a secure and reliable encryption implementation for Python using AES-128 (Advanced Encryption Standard) in CBC (Cipher Block Chaining) mode.
 
 The project aims to provide a user-friendly and effective way to secure files using encryption techniques, with the added advantage of being implemented in Python, a popular and versatile programming language.
 
@@ -22,7 +22,7 @@ The project aims to provide a user-friendly and effective way to secure files us
 2 - Navigate to the repository
 <pre><code>cd name_repository</code></pre>
 
-3 - Lanch the container
+3 - Launch the container
 <pre><code>sh start.sh</code></pre>
 
 4 - Acces to the container in other shell tab
@@ -31,5 +31,5 @@ The project aims to provide a user-friendly and effective way to secure files us
 5 - Run the program in the path /home/test
 <pre><code>python3 stockholm.py</code></pre>
 
-6 - To decrypt the files, run the program again with the flag -r and the key (in test/key.txt)
+6 - To decrypt the files, run the program again with the flag -r and the key (into test/key.txt)
 <pre><code>python3 stockholm.py -r 'key.....'</code></pre>
