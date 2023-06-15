@@ -9,6 +9,8 @@ It utilizes Fernet, a secure and reliable encryption implementation for Python u
 
 The project aims to provide a user-friendly and effective way to secure files using encryption techniques, with the added advantage of being implemented in Python, a popular and versatile programming language.
 
+🟣 The encrypted key will be stored in a file named key.txt in the same directory as the program.
+
 ## Pre-requisites
 
 * Docker: Ensure that you have Docker installed on your machine. If not, you can download it [here](https://www.docker.com/get-started).
