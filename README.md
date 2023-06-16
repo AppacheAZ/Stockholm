@@ -1,6 +1,7 @@
 # Stockholm
 This is a 42 Cybersecurity-Bootcamp project.
 Encryption and decryption of files using a 128-bit key in CBC mode.
+This project create a docker container, a safe environment to test the program, where the user can use the program stockholm.py to encrypt and decrypt files.
 
 ## Project description
 
@@ -35,3 +36,10 @@ The project aims to provide a user-friendly and effective way to secure files us
 
 6 - To decrypt the files, run the program again with the flag -r and the key (into test/key.txt)
 <pre><code>python3 stockholm.py -r 'key.....'</code></pre>
+
+### Flags
+
+* -h: Display the help message.
+* -v: Display the version of the program.
+* -r: Decrypt the files in the directory recursively. The key must be provided as an argument.
+* -p: Specify the path to the directory to encrypt or decrypt. If not specified, the ./infection directory will be used.

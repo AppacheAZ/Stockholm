@@ -4,7 +4,7 @@ echo "Stockholm in a Docker container"
 
 sleep 2
 
-cat ./services/ascii-art.txt
+cat ./services/ascii-art.txt 
 
 printf "\033[1;32m"
 echo "Execute ./acces.sh in other bash tab to access it.
